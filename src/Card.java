@@ -7,7 +7,7 @@ public class Card {
     public Card(int value, String suit){
         this.suit = suit;
         this.value = value;
-
+        
     }
 
     public int getValue() {
