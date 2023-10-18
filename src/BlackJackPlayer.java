@@ -1,13 +1,13 @@
 public class BlackJackPlayer extends Player{
-    private int money;
-    private int bet;
+    private double money;
+    private double bet;
 
     public BlackJackPlayer(String name, int money){
         super(name);
         this.money = money;
 
     }
-    public int getMoney() {
+    public double getMoney() {
         return money;
     }
 
@@ -15,7 +15,7 @@ public class BlackJackPlayer extends Player{
         this.money = money;
     }
 
-    public int getBet() {
+    public double getBet() {
         return bet;
     }
 
@@ -27,6 +27,13 @@ public class BlackJackPlayer extends Player{
         }
         return false;
     }
+
+    // Takes a multiplier and adds winnings to money. 2 för regular win 2.5 for BJ. 1 för returning the bet
+    public void resolveBet(double winMultiplier){
+        money += (bet * winMultiplier);
+        bet = 0;
+    }
+
     public String toString(){
         return "Name: " + getName() + " Money " + money + " Bet: " + bet + " Cards: " + getCardsInHand();
     }
