@@ -46,8 +46,13 @@ public class BlackJack {
         }
         dealerCards.add(deck.drawACard());
         dealerCards.add(deck.drawACard());
+
+        for (BlackJackPlayer player: allPlayers) {
+            System.out.println(player.getName() + ": " + player.cardsToString());
+            System.out.println("Do you want to hit?");
+        }
         printDealerCards(false, dealerCards);
-        // reveal dealer card
+
         // check game state (checkWinner)
         
         // print result
@@ -152,7 +157,7 @@ public class BlackJack {
 
     public void printDealerCards(boolean all, List<Card> cards){
         StringBuilder builder = new StringBuilder();
-
+        builder.append("Dealer has: ");
         for (int i = 0; i < cards.size(); i++) {
             if (i == 0 && !all){
                 builder.append("Hidden");
