@@ -3,14 +3,14 @@ import java.util.*;
 
 public class BlackJack {
     private Deck deck;
-    private Scanner scanner;
+    private Scanner sc;
   
 
     private ArrayList<BlackJackPlayer> players;
 
     public BlackJack() {
         deck = new Deck(6);
-        scanner = new Scanner(System.in);
+        sc = new Scanner(System.in);
         players = new ArrayList<>();
     }
 
@@ -32,7 +32,7 @@ public class BlackJack {
             System.out.println("Dealer's first card: " + dealerCards.get(0));
 
             System.out.println("Do you want to hit (y/n)");
-            String answer = scanner.nextLine().trim().toLowerCase();
+            String answer = sc.nextLine().trim().toLowerCase();
 
             if ("y".equals(answer)) {
                 playerCards.add(deck.getCards().remove(0));
