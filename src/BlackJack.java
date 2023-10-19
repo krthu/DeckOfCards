@@ -1,12 +1,17 @@
+
 import java.util.*;
 
 public class BlackJack {
     private Deck deck;
     private Scanner scanner;
+  
+
+    private ArrayList<BlackJackPlayer> players;
 
     public BlackJack() {
-        deck = new Deck();
+        deck = new Deck(6);
         scanner = new Scanner(System.in);
+        players = new ArrayList<>();
     }
 
     public void play() {
@@ -82,4 +87,43 @@ public class BlackJack {
 
         return total;
     }
+
+
+    public void hit(Player player){
+        player.addCard(deck.drawACard());
+    }
+
+    public void addPlayers(int numberOfPlayers){
+        for (int i = 1; i <= numberOfPlayers; i++){
+            System.out.println("Name of player " + i);
+            String name = sc.nextLine();
+            System.out.println("How much money to put in?");
+            int money = sc.nextInt(); // Need to safe check this
+            sc.nextLine();
+            players.add(new BlackJackPlayer(name, money));
+        }
+    }
+
+    public int getIntSafe(String questionToRepeat, int notUnder, int notOver) {
+
+        String errorMessage = (notOver == notUnder ? "Has to be " + notUnder : "Has to be between " + notUnder + "-" + notOver + ".");
+
+        while (true) {
+            System.out.println(questionToRepeat);
+            String input = sc.nextLine();
+            try {
+                int safeInt = Integer.parseInt(input);
+                if (safeInt >= notUnder && safeInt <= notOver) {
+                    return safeInt;
+                } else {
+                    System.out.println(errorMessage);
+                }
+            } catch (Exception e) {
+                System.out.println(errorMessage);
+            }
+        }
+    }
+
+
+
 }
