@@ -31,4 +31,15 @@ public class Player {
         cardsInHand.clear();
     }
 
+    public String cardsToString(){
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < cardsInHand.size(); i++) {
+            builder.append(cardsInHand.get(i));
+            if (i != cardsInHand.size() -1){
+                builder.append(", ");
+            }
+        }
+        return builder.toString();
+    }
+
 }
