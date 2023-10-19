@@ -48,6 +48,7 @@ public class BlackJack {
         dealerCards.add(deck.drawACard());
 
         for (BlackJackPlayer player: allPlayers) {
+            System.out.println();
             System.out.println("Dealer has: " + printDealerCards(false, dealerCards));
             dealCardsToPlayer(player);
         }
@@ -158,10 +159,12 @@ public class BlackJack {
     public void dealCardsToPlayer(BlackJackPlayer player){
         while (true){
             System.out.println(player.getName() + ": " + player.cardsToString() + " Value: " + calculateScore(player.getCardsInHand()));
-            System.out.println("Do you want to hit?(y/n)");
+
             if(calculateScore(player.getCardsInHand()) > 21){
+                System.out.println(player.getName() + " you bust!");
                 return;
             }
+            System.out.println("Do you want to hit?(y/n)");
             if (sc.nextLine().trim().equalsIgnoreCase("y")){
                 hit(player);
             }else {
