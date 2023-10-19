@@ -49,6 +49,7 @@ public class BlackJack {
         printDealerCards(false, dealerCards);
         // reveal dealer card
         // check game state (checkWinner)
+        
         // print result
     }
 
@@ -57,8 +58,13 @@ public class BlackJack {
             int totalBet = 0;
             do {
                 System.out.println(player.getName() + " you have " + player.getMoney() + " How much do you wanna bet?");
-               totalBet = getIntSafe()
-            }
+
+                totalBet = getIntSafe("Enter an amount to bet: ", 1, (int) player.getMoney());
+                if (!player.setBet(totalBet)) {
+                    System.out.println("Not enough money to place bet, try again");
+                }
+            } while (!player.setBet(totalBet));
+
         }
     }
 
