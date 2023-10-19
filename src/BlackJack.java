@@ -55,10 +55,10 @@ public class BlackJack {
     private void placeBets() {
         for (BlackJackPlayer player : players) {
             int totalBet = 0;
-//            do {
-//                System.out.println(player.getName() + " you have " + player.getMoney() + " How much do you wanna bet?");
-//                totalBet = getIntSafe()
-//            }
+            do {
+                System.out.println(player.getName() + " you have " + player.getMoney() + " How much do you wanna bet?");
+               totalBet = getIntSafe()
+            }
         }
     }
 
