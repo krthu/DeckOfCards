@@ -48,10 +48,10 @@ public class BlackJack {
         dealerCards.add(deck.drawACard());
 
         for (BlackJackPlayer player: allPlayers) {
-            System.out.println(player.getName() + ": " + player.cardsToString());
-            System.out.println("Do you want to hit?");
+            System.out.println("Dealer has: " + printDealerCards(false, dealerCards));
+            dealCardsToPlayer(player);
         }
-        printDealerCards(false, dealerCards);
+
 
         // check game state (checkWinner)
         
@@ -155,7 +155,22 @@ public class BlackJack {
         }
     }
 
-    public void printDealerCards(boolean all, List<Card> cards){
+    public void dealCardsToPlayer(BlackJackPlayer player){
+        while (true){
+            System.out.println(player.getName() + ": " + player.cardsToString() + " Value: " + calculateScore(player.getCardsInHand()));
+            System.out.println("Do you want to hit?(y/n)");
+            if(calculateScore(player.getCardsInHand()) > 21){
+                return;
+            }
+            if (sc.nextLine().trim().equalsIgnoreCase("y")){
+                hit(player);
+            }else {
+                return;
+            }
+        }
+    }
+
+    public String printDealerCards(boolean all, List<Card> cards){
         StringBuilder builder = new StringBuilder();
         builder.append("Dealer has: ");
         for (int i = 0; i < cards.size(); i++) {
@@ -168,7 +183,7 @@ public class BlackJack {
                 builder.append(", ");
             }
         }
-        System.out.println(builder.toString());
+        return builder.toString();
     }
 }
 
