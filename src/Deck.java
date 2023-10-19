@@ -30,8 +30,24 @@ public class Deck {
         return cards;
     }
 
+
     public Card drawACard(){
         return cards.remove(rand.nextInt(cards.size()));
+    }
+
+
+    public boolean sortDeck(){
+        int numberOfCards = cards.size();
+        for (int i = 0; i < numberOfCards - 1; i++){
+
+            for (int j = 0; j < numberOfCards - i -1; j++){
+                if (cards.get(j).value > cards.get(j + 1).value){
+                    Card tempCard = cards.remove(j);
+                    cards.add(j+1, tempCard);
+                }
+            }
+        }
+        return true;
     }
 
 

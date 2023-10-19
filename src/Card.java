@@ -7,7 +7,7 @@ public class Card {
     public Card(int value, String suit){
         this.suit = suit;
         this.value = value;
-        
+
     }
 
     public int getValue() {
@@ -18,6 +18,14 @@ public class Card {
         return suit;
     }
 
+    public int compareTo(Card otherCard) {
+        // Compare against value
+        if (this.value < otherCard.value) return -1;
+        if (this.value < otherCard.value) return 1;
+
+        // Compare against suit
+        return this.suit.compareTo(otherCard.suit);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -29,6 +37,10 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(value, suit);
+    }
+
+    public String toString(){
+        return "Value: " + value + " Suit: " + suit;
     }
 }
 
