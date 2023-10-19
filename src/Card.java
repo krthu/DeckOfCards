@@ -39,8 +39,10 @@ public class Card {
         return Objects.hash(value, suit);
     }
 
-    public String toString(){
-        return "Value: " + value + " Suit: " + suit;
+    public String toString() {
+        String[] cardNames = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
+        return cardNames[value - 1] + " of " + suit;
+
     }
 }
 
