@@ -5,7 +5,6 @@ import java.util.Random;
 public class Deck {
 
     private List<Card> cards = new ArrayList<>();
-    private Random rand = new Random();
 
     public Deck(){
         String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
@@ -32,7 +31,7 @@ public class Deck {
 
 
     public Card drawACard(){
-        return cards.remove(rand.nextInt(cards.size()));
+        return cards.remove(0);
     }
 
 
