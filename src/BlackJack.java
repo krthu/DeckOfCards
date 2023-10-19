@@ -4,7 +4,6 @@ import java.util.*;
 public class BlackJack {
     private Deck deck;
     private Scanner sc;
-  
 
     private ArrayList<BlackJackPlayer> players;
 
@@ -15,54 +14,69 @@ public class BlackJack {
     }
 
     public void play() {
-        List<Card> playerCards = new ArrayList<>();
-        List<Card> dealerCards = new ArrayList<>();
-
-        // Shuffle the deck
-        Collections.shuffle(deck.getCards());
-
-        // Draw cards for player and dealer
-        playerCards.add(deck.getCards().remove(0));
-        playerCards.add(deck.getCards().remove(0));
-        dealerCards.add(deck.getCards().remove(0));
-        dealerCards.add(deck.getCards().remove(0));
+        Player player1 = new BlackJackPlayer("Kristian", 1000);
+        Player player2 = new BlackJackPlayer("Linus", 1000);
+        List<Player> allPlayers = Arrays.asList(player1, player2);
 
         while (true) {
-            System.out.println("Your cards: " + playerCards + " Value " + calculateScore(playerCards));
-            System.out.println("Dealer's first card: " + dealerCards.get(0));
+            playRound(allPlayers);
 
-            System.out.println("Do you want to hit (y/n)");
-            String answer = sc.nextLine().trim().toLowerCase();
+            // ask user if they want to play again
+            System.out.println("Do you want to play again? (y/n)");
+            String userInput = sc.nextLine().trim().toLowerCase();
 
-            if ("y".equals(answer)) {
-                playerCards.add(deck.getCards().remove(0));
-                if (calculateScore(playerCards) > 21) {
-                    System.out.println("Your cards: " + playerCards + ". Your score is over 21. You lose!");
-                    break;
-                }
-            }  else {
-                break; // Break the loop if player choose not to draw a new card.
+            if (!"y".equals(userInput)) {
+                break;
             }
         }
 
-        while (calculateScore(dealerCards) < 17) {
-            dealerCards.add(deck.getCards().remove(0));
-        }
+    }
 
-        int playerScore = calculateScore(playerCards);
+    public void playRound(List<Player> allPlayers){
+        // Create a list of cards for the dealer
+        List<Card> dealerCards = new ArrayList<>();
+        // shuffle the deck
+        Collections.shuffle(deck.getCards());
+        // Place bets
+        placeBets();
+        // give cards to players
+        for (BlackJackPlayer player : players) {
+            player.addCard(deck.getCards().remove(0));
+            player.addCard(deck.getCards().remove(0));
+        }
+        // reveal dealer card
+        // check game state (checkWinner)
+        // print result
+    }
+
+    private void placeBets() {
+        for (BlackJackPlayer player : players) {
+            int totalBet = 0;
+            do {
+                System.out.println(player.getName() + " you have " + player.getMoney() + " How much do you wanna bet?");
+                totalBet = getIntSafe()
+            }
+        }
+    }
+
+    public void checkWinner(List<BlackJackPlayer> players, List<Card> dealerCards){
         int dealerScore = calculateScore(dealerCards);
 
-        System.out.println("Your cards: " + playerCards + ". Your scores: " + playerScore);
-        System.out.println("Dealer's cards " + dealerCards + " Dealer's score: " + dealerScore);
+        System.out.println("Dealer's cards: " + dealerCards + ". Dealer's score : " + dealerScore);
 
-        if (playerScore > 21) {
-            System.out.println("You lose!");
-        } else if (dealerScore > 21 || playerScore > dealerScore) {
-            System.out.println("You win!");
-        } else if (playerScore == dealerScore) {
-            System.out.println("It's a tie!");
-        } else {
-            System.out.println("Dealer wins!");
+        for (BlackJackPlayer player : players) {
+            int playerScore = calculateScore(player.getCardsInHand());
+            System.out.println(player.getName() + " 's cards: " + player.cardsToString());
+
+            if (playerScore > 21) {
+                System.out.println(player.getName() + " loses (You're busted)!");
+            } else if (dealerScore > 21 || playerScore < dealerScore) {
+                System.out.println(player.getName() + " wins!");
+            } else if (playerScore == dealerScore) {
+                System.out.println("It's a tie for " + player.getName() + "!");
+            } else {
+                System.out.println(player.getName() + " loses!");
+            }
         }
     }
 
