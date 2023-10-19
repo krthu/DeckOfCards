@@ -7,7 +7,7 @@ public class Card {
     public Card(int value, String suit){
         this.suit = suit;
         this.value = value;
-        
+
     }
 
     public int getValue() {
@@ -37,6 +37,10 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(value, suit);
+    }
+
+    public String toString(){
+        return "Value: " + value + " Suit: " + suit;
     }
 }
 
