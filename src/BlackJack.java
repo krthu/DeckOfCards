@@ -44,6 +44,9 @@ public class BlackJack {
             player.addCard(deck.getCards().remove(0));
             player.addCard(deck.getCards().remove(0));
         }
+        dealerCards.add(deck.drawACard());
+        dealerCards.add(deck.drawACard());
+        printDealerCards(false, dealerCards);
         // reveal dealer card
         // check game state (checkWinner)
         
@@ -55,11 +58,13 @@ public class BlackJack {
             int totalBet = 0;
             do {
                 System.out.println(player.getName() + " you have " + player.getMoney() + " How much do you wanna bet?");
+
                 totalBet = getIntSafe("Enter an amount to bet: ", 1, (int) player.getMoney());
                 if (!player.setBet(totalBet)) {
                     System.out.println("Not enough money to place bet, try again");
                 }
             } while (!player.setBet(totalBet));
+
         }
     }
 
@@ -142,6 +147,23 @@ public class BlackJack {
         }
     }
 
+    public void printDealerCards(boolean all, List<Card> cards){
+        StringBuilder builder = new StringBuilder();
 
-
+        for (int i = 0; i < cards.size(); i++) {
+            if (i == 0 && !all){
+                builder.append("Hidden");
+            }else {
+                builder.append(cards.get(i));
+            }
+            if (i != cards.size() -1){
+                builder.append(", ");
+            }
+        }
+        System.out.println(builder.toString());
+    }
 }
+
+
+
+
