@@ -14,9 +14,9 @@ public class BlackJack {
     }
 
     public void play() {
-        Player player1 = new BlackJackPlayer("Kristian", 1000);
-        Player player2 = new BlackJackPlayer("Linus", 1000);
-        List<Player> allPlayers = Arrays.asList(player1, player2);
+        BlackJackPlayer player1 = new BlackJackPlayer("Kristian", 1000);
+        BlackJackPlayer player2 = new BlackJackPlayer("Linus", 1000);
+        List<BlackJackPlayer> allPlayers = Arrays.asList(player1, player2);
 
         while (true) {
             playRound(allPlayers);
@@ -32,15 +32,15 @@ public class BlackJack {
 
     }
 
-    public void playRound(List<Player> allPlayers){
+    public void playRound(List<BlackJackPlayer> allPlayers){
         // Create a list of cards for the dealer
         List<Card> dealerCards = new ArrayList<>();
         // shuffle the deck
         Collections.shuffle(deck.getCards());
         // Place bets
-        placeBets();
+        placeBets(allPlayers);
         // give cards to players
-        for (BlackJackPlayer player : players) {
+        for (BlackJackPlayer player : allPlayers) {
             player.addCard(deck.getCards().remove(0));
             player.addCard(deck.getCards().remove(0));
         }
@@ -53,18 +53,21 @@ public class BlackJack {
         // print result
     }
 
-    private void placeBets() {
-        for (BlackJackPlayer player : players) {
-            int totalBet = 0;
+    private void placeBets(List<BlackJackPlayer> allPlayers) {
+        for (BlackJackPlayer player : allPlayers) {
+            boolean madeBet;
+
             do {
                 System.out.println(player.getName() + " you have " + player.getMoney() + " How much do you wanna bet?");
 
-                totalBet = getIntSafe("Enter an amount to bet: ", 1, (int) player.getMoney());
-                if (!player.setBet(totalBet)) {
+                int totalBet = getIntSafe("Enter an amount to bet: ", 1, (int) player.getMoney());
+
+                madeBet = player.setBet(totalBet);
+
+                if (!madeBet) {
                     System.out.println("Not enough money to place bet, try again");
                 }
-            } while (!player.setBet(totalBet));
-
+            } while (!madeBet);
         }
     }
 
