@@ -209,7 +209,10 @@ public class BlackJack {
     public void dealCardsToPlayer(BlackJackPlayer player){
         while (true){
             System.out.println(player.getName() + ": " + player.cardsToString() + " Value: " + calculateScore(player.getCardsInHand()));
-
+            if (calculateScore(player.getCardsInHand()) == 21 && player.getCardsInHand().size() == 2) {
+                System.out.println("You have Blackjack!");
+                return;
+            }
             if(calculateScore(player.getCardsInHand()) > 21){
                 System.out.println(player.getName() + " you bust!");
                 return;
