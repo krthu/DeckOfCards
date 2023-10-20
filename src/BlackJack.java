@@ -1,5 +1,6 @@
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class BlackJack {
     private Deck deck;
@@ -48,6 +49,7 @@ public class BlackJack {
         dealerCards.add(deck.drawACard());
         if (calculateScore(dealerCards) != 21){
             dealCardsToPlayers(allPlayers, dealerCards);
+            playDealerHand(dealerCards);
             }
         else {
             System.out.println("Dealer has " + printDealerCards(true, dealerCards));
@@ -200,6 +202,30 @@ public class BlackJack {
         }
         return builder.toString();
     }
+
+    public List<Card> playDealerHand(List<Card> dealerCards){
+        System.out.println("Dealer has: " + printDealerCards(true, dealerCards) + " Value " +calculateScore(dealerCards));
+        while (!(calculateScore(dealerCards) >= 17)){
+            try{
+                TimeUnit.SECONDS.sleep(1);
+            }catch (Exception e){
+
+            }
+
+            dealerCards.add(deck.drawACard());
+            System.out.println("Dealer has: " + printDealerCards(true, dealerCards) + " Value: " + calculateScore(dealerCards));
+        }
+        return dealerCards;
+    }
+
+    public List<BlackJackPlayer> clearPlayerCards(List<BlackJackPlayer> allPlayers){
+        for (BlackJackPlayer player: allPlayers) {
+            player.discardHand();
+        }
+        return allPlayers;
+    }
+
+
 }
 
 
