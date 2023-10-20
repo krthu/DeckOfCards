@@ -47,6 +47,7 @@ public class BlackJack {
         }
         dealerCards.add(deck.drawACard());
         dealerCards.add(deck.drawACard());
+
         if (calculateScore(dealerCards) != 21){
             dealCardsToPlayers(allPlayers, dealerCards);
             playDealerHand(dealerCards);
@@ -56,9 +57,12 @@ public class BlackJack {
             System.out.println("That is BlackJack!");
         }
 
-
-
         // check game state (checkWinner)
+
+        printDealerCards(false, dealerCards);
+        // reveal dealer card
+        checkWinner(allPlayers, dealerCards);
+
         
         // print result
     }
@@ -81,23 +85,50 @@ public class BlackJack {
         }
     }
 
-    public void checkWinner(List<BlackJackPlayer> players, List<Card> dealerCards){
+    public void checkWinner(List<BlackJackPlayer> allPlayers, List<Card> dealerCards){
         int dealerScore = calculateScore(dealerCards);
+        System.out.println("Dealer's cards: " + dealerCards + ". Dealers score: " + dealerScore);
 
-        System.out.println("Dealer's cards: " + dealerCards + ". Dealer's score : " + dealerScore);
-
-        for (BlackJackPlayer player : players) {
+        for (BlackJackPlayer player : allPlayers) {
             int playerScore = calculateScore(player.getCardsInHand());
-            System.out.println(player.getName() + " 's cards: " + player.cardsToString());
+            System.out.println(player.getName() + " cards: " + player.getCardsInHand() + ". Score " + playerScore);
 
+            // Check for Blackjack
+            if (playerScore == 21 && player.getCardsInHand().size() == 2 && dealerScore != 21 && dealerCards.size() == 2) {
+                System.out.println(player.getName() + " got Blackjack! You win 2.5x your bet.");
+                player.resolveBet(2.5);
+                continue;
+            }
+
+            if (dealerScore == 21 && dealerCards.size() == 2 && playerScore != 21 && player.getCardsInHand().size() == 2){
+                System.out.println("Dealer got Blackjack" + player.getName() + " loses their bet.");
+                player.resolveBet(0);
+                continue;
+            }
+
+            // Check for busts
             if (playerScore > 21) {
-                System.out.println(player.getName() + " loses (You're busted)!");
-            } else if (dealerScore > 21 || playerScore < dealerScore) {
-                System.out.println(player.getName() + " wins!");
+                System.out.println(player.getName() + " went over 21. You lose your bet");
+                player.resolveBet(0);
+                continue;
+            }
+
+            if (dealerScore > 21 && playerScore < 21) {
+                System.out.println("Dealer went over 21. " + player.getName() + " wins double the bet.");
+                player.resolveBet(2);
+                continue;
+            }
+
+            // Regular outcomes
+            if (playerScore > dealerScore){
+                System.out.println(player.getName() + " wins double the bet");
+                player.resolveBet(2);
             } else if (playerScore == dealerScore) {
-                System.out.println("It's a tie for " + player.getName() + "!");
+                System.out.println("It's a tie! " + player.getName() + " gets the bet back.");
+                player.resolveBet(1);
             } else {
-                System.out.println(player.getName() + " loses!");
+                System.out.println(player.getName() + " loses the bet");
+                player.resolveBet(0);
             }
         }
     }
