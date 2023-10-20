@@ -60,8 +60,13 @@ public class BlackJack {
         // check game state (checkWinner)
 
         printDealerCards(false, dealerCards);
+
         // reveal dealer card
         checkWinner(allPlayers, dealerCards);
+
+        // CLear the hands of all players
+        clearPlayerCards(allPlayers);
+        dealerCards.clear();
 
         
         // print result
