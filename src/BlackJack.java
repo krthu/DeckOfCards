@@ -15,10 +15,11 @@ public class BlackJack {
     }
 
     public void play() {
-        BlackJackPlayer player1 = new BlackJackPlayer("Kristian", 1000);
-        BlackJackPlayer player2 = new BlackJackPlayer("Linus", 1000);
-        List<BlackJackPlayer> allPlayers = Arrays.asList(player1, player2);
-
+        //BlackJackPlayer player1 = new BlackJackPlayer("Kristian", 1000);
+        //BlackJackPlayer player2 = new BlackJackPlayer("Linus", 1000);
+        List<BlackJackPlayer> allPlayers = new ArrayList<>();
+        int numberOfPlayers = getIntSafe("How many players?",1, 7);
+        addPlayers(numberOfPlayers, allPlayers);
         while (true) {
             playRound(allPlayers);
 
@@ -165,14 +166,14 @@ public class BlackJack {
         player.addCard(deck.drawACard());
     }
 
-    public void addPlayers(int numberOfPlayers){
+    public void addPlayers(int numberOfPlayers, List<BlackJackPlayer> allPlayers){
         for (int i = 1; i <= numberOfPlayers; i++){
             System.out.println("Name of player " + i);
             String name = sc.nextLine();
             System.out.println("How much money to put in?");
             int money = sc.nextInt(); // Need to safe check this
             sc.nextLine();
-            players.add(new BlackJackPlayer(name, money));
+            allPlayers.add(new BlackJackPlayer(name, money));
         }
     }
 
