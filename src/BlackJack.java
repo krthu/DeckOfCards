@@ -46,8 +46,16 @@ public class BlackJack {
         }
         dealerCards.add(deck.drawACard());
         dealerCards.add(deck.drawACard());
-        printDealerCards(false, dealerCards);
-        // reveal dealer card
+        if (calculateScore(dealerCards) != 21){
+            dealCardsToPlayers(allPlayers, dealerCards);
+            }
+        else {
+            System.out.println("Dealer has " + printDealerCards(true, dealerCards));
+            System.out.println("That is BlackJack!");
+        }
+
+
+
         // check game state (checkWinner)
         
         // print result
@@ -150,9 +158,36 @@ public class BlackJack {
         }
     }
 
-    public void printDealerCards(boolean all, List<Card> cards){
-        StringBuilder builder = new StringBuilder();
+    public void dealCardsToPlayers(List<BlackJackPlayer> allPlayers, List<Card> dealerCards){
+        for (BlackJackPlayer player: allPlayers)
+        {
+            System.out.println();
+            System.out.println("Dealer has: " + printDealerCards(false, dealerCards));
+            dealCardsToPlayer(player);
+        }
+    }
 
+
+    public void dealCardsToPlayer(BlackJackPlayer player){
+        while (true){
+            System.out.println(player.getName() + ": " + player.cardsToString() + " Value: " + calculateScore(player.getCardsInHand()));
+
+            if(calculateScore(player.getCardsInHand()) > 21){
+                System.out.println(player.getName() + " you bust!");
+                return;
+            }
+            System.out.println("Do you want to hit?(y/n)");
+            if (sc.nextLine().trim().equalsIgnoreCase("y")){
+                hit(player);
+            }else {
+                return;
+            }
+        }
+    }
+
+    public String printDealerCards(boolean all, List<Card> cards){
+        StringBuilder builder = new StringBuilder();
+        builder.append("Dealer has: ");
         for (int i = 0; i < cards.size(); i++) {
             if (i == 0 && !all){
                 builder.append("Hidden");
@@ -163,7 +198,7 @@ public class BlackJack {
                 builder.append(", ");
             }
         }
-        System.out.println(builder.toString());
+        return builder.toString();
     }
 }
 
