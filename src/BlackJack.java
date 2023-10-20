@@ -118,7 +118,7 @@ public class BlackJack {
                 continue;
             }
 
-            if (dealerScore > 21 && playerScore < 21) {
+            if (dealerScore > 21) {
                 System.out.println("Dealer went over 21. " + player.getName() + " wins double the bet.");
                 player.resolveBet(2);
                 continue;
