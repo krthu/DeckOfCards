@@ -164,7 +164,7 @@ public class BlackJack {
         for (BlackJackPlayer player: allPlayers)
         {
             System.out.println();
-            System.out.println("Dealer has: " + printDealerCards(false, dealerCards));
+            System.out.println(printDealerCards(false, dealerCards));
             dealCardsToPlayer(player);
         }
     }
@@ -204,7 +204,7 @@ public class BlackJack {
     }
 
     public List<Card> playDealerHand(List<Card> dealerCards){
-        System.out.println("Dealer has: " + printDealerCards(true, dealerCards) + " Value " +calculateScore(dealerCards));
+        System.out.println(printDealerCards(true, dealerCards) + " Value " +calculateScore(dealerCards));
         while (!(calculateScore(dealerCards) >= 17)){
             try{
                 TimeUnit.SECONDS.sleep(1);
@@ -213,7 +213,7 @@ public class BlackJack {
             }
 
             dealerCards.add(deck.drawACard());
-            System.out.println("Dealer has: " + printDealerCards(true, dealerCards) + " Value: " + calculateScore(dealerCards));
+            System.out.println(printDealerCards(true, dealerCards) + " Value: " + calculateScore(dealerCards));
         }
         return dealerCards;
     }
