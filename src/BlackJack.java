@@ -46,12 +46,14 @@ public class BlackJack {
         }
         dealerCards.add(deck.drawACard());
         dealerCards.add(deck.drawACard());
-
-        for (BlackJackPlayer player: allPlayers) {
-            System.out.println();
-            System.out.println("Dealer has: " + printDealerCards(false, dealerCards));
-            dealCardsToPlayer(player);
+        if (calculateScore(dealerCards) != 21){
+            dealCardsToPlayers(allPlayers, dealerCards);
+            }
+        else {
+            System.out.println("Dealer has " + printDealerCards(true, dealerCards));
+            System.out.println("That is BlackJack!");
         }
+
 
 
         // check game state (checkWinner)
@@ -155,6 +157,16 @@ public class BlackJack {
             }
         }
     }
+
+    public void dealCardsToPlayers(List<BlackJackPlayer> allPlayers, List<Card> dealerCards){
+        for (BlackJackPlayer player: allPlayers)
+        {
+            System.out.println();
+            System.out.println("Dealer has: " + printDealerCards(false, dealerCards));
+            dealCardsToPlayer(player);
+        }
+    }
+
 
     public void dealCardsToPlayer(BlackJackPlayer player){
         while (true){
